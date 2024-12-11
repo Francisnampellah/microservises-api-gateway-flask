@@ -73,16 +73,28 @@ def route_request(service_name):
     }), 503
 
 
-@app.route('/user-service/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
-@app.route('/user-service/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
-def user_service(path):
-    return route_request('user-service')
+@app.route('/movies/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/movies/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+def movies_service(path):
+    return route_request('movies')
 
 
-@app.route('/loan-service/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
-@app.route('/loan-service/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
-def loan_service(path):
-    return route_request('loan-service')
+@app.route('/showtimes/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/showtimes/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+def showtimes_service(path):
+    return route_request('showtimes')
+
+
+@app.route('/users/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/users/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+def users_service(path):
+    return route_request('users')
+
+
+@app.route('/booking/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+@app.route('/booking/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])
+def booking_service(path):
+    return route_request('booking')
 
 
 @app.route('/register', methods=['POST'])
@@ -107,14 +119,24 @@ def unregister_service():
 if __name__ == '__main__':
     # Register services on startup
     service_registry.register_service(
-        'user-service',
-        os.getenv('USER_SERVICE_HOST', 'localhost'),
-        int(os.getenv('USER_SERVICE_PORT', 8001))
+        'movies',
+        os.getenv('MOVIES_SERVICE_HOST', 'localhost'),
+        int(os.getenv('MOVIES_SERVICE_PORT',5001))
     )
     service_registry.register_service(
-        'loan-service',
-        os.getenv('LOAN_SERVICE_HOST', 'localhost'),
-        int(os.getenv('LOAN_SERVICE_PORT', 8002))
+        'showtimes',
+        os.getenv('SHOWTIMES_SERVICE_HOST', 'localhost'),
+        int(os.getenv('SHOWTIMES_SERVICE_PORT', 5002))
+    )
+    service_registry.register_service(
+        'users',
+        os.getenv('USERS_SERVICE_HOST', 'localhost'),
+        int(os.getenv('USERS_SERVICE_PORT', 5000))
+    )
+    service_registry.register_service(
+        'booking',
+        os.getenv('BOOKING_SERVICE_HOST', 'localhost'),
+        int(os.getenv('BOOKING_SERVICE_PORT',5003))
     )
 
     # Run the API Gateway

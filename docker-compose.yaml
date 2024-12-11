@@ -19,29 +19,55 @@ services:
     environment:
       - ETCD_HOST=etcd
       - ETCD_PORT=2379
-      - USER_SERVICE_HOST=user-service
-      - USER_SERVICE_PORT=8001
-      - LOAN_SERVICE_HOST=loan-service
-      - LOAN_SERVICE_PORT=8002
+      - MOVIES_SERVICE_HOST=movies
+      - MOVIES_SERVICE_PORT=5001
+      - SHOWTIMES_SERVICE_HOST=showtimes
+      - SHOWTIMES_SERVICE_PORT=5002
+      - USERS_SERVICE_HOST=users
+      - USERS_SERVICE_PORT=5000
+      - BOOKING_SERVICE_HOST=booking
+      - BOOKING_SERVICE_PORT=5003
     depends_on:
       - etcd
-      - user-service
-      - loan-service
+      - movies
+      - showtimes
+      - users
+      - booking
 
-  user-service:
-    build: ./user-service
+  movies:
+    build: ./movies
     ports:
-      - "8001:8001"
+      - "5001:5001"
     environment:
       - ETCD_HOST=etcd
       - ETCD_PORT=2379
     depends_on:
       - etcd
 
-  loan-service:
-    build: ./loan-service
+  showtimes:
+    build: ./showtimes
     ports:
-      - "8002:8002"
+      - "5002:5002"
+    environment:
+      - ETCD_HOST=etcd
+      - ETCD_PORT=2379
+    depends_on:
+      - etcd
+
+  users:
+    build: ./users
+    ports:
+      - "5000:5000"
+    environment:
+      - ETCD_HOST=etcd
+      - ETCD_PORT=2379
+    depends_on:
+      - etcd
+
+  booking:
+    build: ./booking
+    ports:
+      - "5003:5003"
     environment:
       - ETCD_HOST=etcd
       - ETCD_PORT=2379
